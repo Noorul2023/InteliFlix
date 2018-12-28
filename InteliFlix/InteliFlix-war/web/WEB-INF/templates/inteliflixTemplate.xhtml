@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <h:outputStylesheet library="css" name="style.css"/>
+            <title><ui:insert name="title">Admin</ui:insert></title>
+            <ui:insert name="head">
+            </ui:insert>
+            <style type="text/css">
+            </style>
+        </h:head>
+        <h:body >
+            <ui:insert name="above"></ui:insert>
+            
+            <h:panelGroup layout="block" styleClass="top">
+                <h:form id="buttonbarfrm">
+                    <table class="top_table">
+
+                        <td style="width:29%;">
+                            <h:panelGrid columns="2">
+                                <h:link outcome="/user/homePage.xhtml">
+                                    <h:graphicImage library="images" name="inteliflix_logo_no_background.png" height="62px"/>
+                                </h:link>
+                                <h:panelGrid columns="1">
+                                    <h:outputText styleClass="header" value="Welcome to InteliFlix" style="font-weight:bolder; margin-top: .35em;"/>
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </td>
+                        <td style="width:42%;" class="icon_tray_td_center">
+                            <p:spacer />
+                        </td>
+                        <td style="width:100px;vertical-align:top;">
+                            <h:form id="adminmenuform">
+                                <div class="right">
+                                    <div class="dropdown">
+                                        <button class="dropbtn">Navigation</button>
+                                        <div class="dropdown-content" >
+                                            <a href="/InteliFlix-war/faces/user/homePage.xhtml" >Home</a>
+                                            <a href="/InteliFlix-war/faces/user/rentals.xhtml">My Rentals</a>
+                                            <a href="/InteliFlix-war/faces/user/favorites.xhtml">My Favorites</a>
+                                            <a href="/InteliFlix-war/faces/user/account.xhtml">My Account</a>
+                                            <a href="/InteliFlix-war/faces/admin/adminHome.xhtml">Admin Center</a>
+                                            <p:commandButton id="logout" action="#{loginBeanFlix.logout()}" value="Logout" ajax="false"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </td>
+
+                    </table>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup styleClass="main" layout="block">
+                <h:panelGroup layout="block" style="margin-top: 60px">
+                    <ui:insert name="content">
+                        Content
+                    </ui:insert>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:body>
+
+    </f:view>
+</html>

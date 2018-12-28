@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/inteliflixTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"  >
+
+
+
+    <ui:define name="content">
+        <h10 class="center-prominant" >Welcome to your Favorites</h10>
+        <h:form>
+            <p:dataTable var="favMovie" editable="true" value="#{favoritesView.movieList}" style="width:100%; text-align: center; font-size: 2.5em">
+                <p:column headerText="TITLE" style="vertical-align: middle">
+                    
+
+                    <h:commandLink action="#{favoritesView.gotoMovie(favMovie.serialKey)}">
+                        <h3 style="margin: auto"
+>                        <h:outputText value="#{favMovie.title}" style="font-size: 1em"/>
+                        </h3>
+                        <p:graphicImage  value="#{moviePhotoLoader.image}"
+                                         height="250" width="190"  cache="false" >
+                            <f:param name="movieKey" value="#{favMovie.serialKey}" />
+                        </p:graphicImage>
+                    </h:commandLink>
+                </p:column>
+                <p:column headerText="ACTORS">
+
+                    <h:outputText value="#{favMovie.actors}" />
+                </p:column>
+                <p:column headerText="GENRE" style="">
+                    <h:outputText value="#{favMovie.genre.name}" />
+                </p:column>
+                <p:column headerText="RATING"  style=" ">
+                    <h:outputText value="#{favMovie.ratings.label}" />
+                </p:column>
+            </p:dataTable>
+            <p:growl id="alreadyOwned" showDetail="false"/> 
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+

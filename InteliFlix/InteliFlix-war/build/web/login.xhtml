@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/loginTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:define name="content">
+        <!-- Width of dialog is needed for the role selection panel view -->
+        <p:dialog id="dialog"
+                  header="Login"
+                  visible="true"
+                  draggable="false"
+                  resizable="false"
+                  responsive="true"
+                  closable="false"
+                  modal="true"
+                  width="450"
+                  >
+            <h:form>
+                <p:panel style="border:none;background:none;">
+
+                    <p:panelGrid columns="2" layout="grid">
+                        <p:outputLabel for="username" value="Username: " styleClass="headerLabel"  />
+                        <p:inputText id="username" value="#{loginBeanFlix.username}" ps:placeholder="Enter Username" required="true" />
+
+                        <p:outputLabel for="password" value="Password: " styleClass="headerLabel"  />
+                        <p:password id="password" value="#{loginBeanFlix.password}" style="color:black;" ps:placeholder="Enter Password" required="true"  />
+
+                    </p:panelGrid>
+                    <h:panelGroup layout="block" >
+                        <p:commandButton id="login" action="#{loginBeanFlix.login()}" value="Login" ajax="false" styleClass="loginButton" />
+                        <p:commandButton action="/registration.xhtml?faces-redirect=true" value="Create an Account" ajax="false" styleClass="loginButton" />
+                        
+                    </h:panelGroup>
+                    
+                    <!--<br />
+                    <h:link outcome="/loginError.xhtml?faces-redirect=true" value="LINK HERE" />
+                    <br />
+                    <h:outputLink value="loginError.xhtml"  >LINK HERE</h:outputLink> -->
+                    <!--<div style="text-align: center;">
+                        <p:commandLink action="resetpassword.xhtml?faces-redirect=true" value="Forgot your password?" styleClass="loginButton" immediate="true" />
+                    </div>-->
+                </p:panel>
+
+            </h:form>  
+        </p:dialog>
+</ui:define>
+</ui:composition>

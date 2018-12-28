@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/inteliflixTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"  >
+
+
+
+    <ui:define name="content">
+        <h10 class="center-prominant" >Welcome to your Rentals </h10>
+
+        <h:form>
+            <p:dataTable var="rentedMovie" editable="true" value="#{rentalsView.movieRentedList}" style="width:100%; text-align: center; font-size: 2.5em">
+
+                <p:column headerText="TITLE">
+
+                    <h:commandLink action="#{rentalsView.gotoMovie(rentedMovie.movie.serialKey)}">
+                        <h3 style="margin: auto">
+                            <h:outputText value="#{rentedMovie.movie.title}"/>
+                        </h3>
+                        <p:graphicImage  value="#{moviePhotoLoader.image}"
+                                         height="250" width="190"  cache="false" >
+                            <f:param name="movieKey" value="#{rentedMovie.movie.serialKey}" />
+                        </p:graphicImage>
+                        
+                    </h:commandLink>
+
+
+                </p:column>
+                <p:column headerText="EXPIRED DATE">
+                    <h:outputText value="#{rentedMovie.expiredDate}" />
+                </p:column>
+                <p:column headerText="PRICE">
+                    <h:outputText value="$#{rentedMovie.rentedPrice}" />
+                </p:column>
+
+            </p:dataTable>
+            <p:growl id="alreadyOwned" showDetail="false"/> 
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+

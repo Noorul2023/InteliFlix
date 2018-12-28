@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/inteliflixTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"  >
+
+
+
+    <ui:define name="content">
+        <h10 class="center-prominant" >Welcome to the Admin Center</h10>
+        <h:form id="generalInfoForm" enctype="multipart/form-data">
+            <p:growl id="growl" showDetail="true" sticky="false" />  
+
+            <div class="center">
+
+                <h:panelGrid id="mainOptionsPanel" columns="3" styleClass="panelGridCenter"  >
+                    <p:commandButton value="New Movie"
+                                     id="commandNewMovie"
+                                     styleClass="largeSplitButtonAccount" 
+                                     style="width: 300px; font-size: 1.9em"
+                                     action="/admin/addMovie.xhtml?faces-redirect=true" 
+                                     update="@form" />
+
+                    <p:commandButton value="New Update Service Pricing"
+                                     id="commandUpdateServicePricing"
+                                     styleClass="largeSplitButtonAccount" 
+                                     style="width: 300px; font-size: 1.9em"
+                                     actionListener="#{adminHomeView.setOptions()}"
+                                     update="@form" /> 
+
+                    <p:commandButton value="View Customer billing History"
+                                     id="commandCustomerBilling"
+                                     styleClass="largeSplitButtonAccount"
+                                     style="width: 300px; font-size: 1.9em"
+                                     action="/admin/customerHistory.xhtml?faces-redirect=true" 
+                                     update="@form" />
+                </h:panelGrid>
+
+
+                <h:panelGrid id="adminOptionsPanel" columns="1" style="width:400px" rendered="#{adminHomeView.visibility}" styleClass="panelGridCenter" >
+                    <p:separator styleClass="emptySpace"/>
+                    <p:separator styleClass="emptySpace"/>
+                    <h:inputText id="price" value="#{adminHomeView.options.cost}" 
+                                 styleClass="largeSplitButtonAccount"
+                                 style="width: 300px; font-size: 2.5em; text-align: center;"
+                                 title="Price" >
+                    </h:inputText>
+
+
+                    <h:panelGrid id="pricingPanel" columns="2" styleClass="panelGridCenter" >
+                        <p:commandButton value="Update Service Cost" 
+                                         id="commandUpdatePricing"
+                                         styleClass="largeSplitButtonAccount"
+                                         style="width: 300px; font-size: 1.9em"
+                                         actionListener="#{adminHomeView.updatePricing}" 
+                                         update="@form" />
+                        <p:commandButton value="Cancel Update" 
+                                         id="commandCancelUpdate"
+                                         styleClass="largeSplitButtonAccount"
+                                         style="width: 300px; font-size: 1.9em"
+                                         actionListener="#{adminHomeView.cancelUpdate}" 
+                                         update="@form" />
+                    </h:panelGrid>
+
+
+                </h:panelGrid>
+
+            </div>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+

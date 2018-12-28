@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/inteliflixTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"  >
+
+    <ui:define name="content">
+
+        <h:form>
+            <p:panel style="text-align: center; background: transparent; border: transparent; transition: 2s ease;" rendered="#{streamingView.movieAvailable}">
+                <h:graphicImage library="images"
+
+                                name="play.jpg" 
+                                height="720"
+                                />
+            </p:panel>
+
+            <p:panelGrid columns="2" style="font-size: 2em; background:transparent;">
+                <p:column style="background: transparent">
+
+                    <p:graphicImage  value="#{moviePhotoLoader.image}"
+                                     id="img"
+                                     width="500" 
+                                     cache="false">    
+                        <f:param name="movieKey" value="#{streamingView.selectedMovie.serialKey}" />
+                    </p:graphicImage>
+
+                </p:column>
+                <p:column>
+                    <p:row>
+                        <p:panelGrid columns="2" style="font-size: 1em; width: 100%">
+                            <p:commandButton value="RENT" 
+                                             ajax="false" 
+                                             action="#{streamingView.rent()}" 
+                                             styleClass="rentFavButton"  
+                                             style="background: white;color: forestgreen"
+                                             rendered="#{not streamingView.checkPlay()}"/>
+                            <p:commandButton value="Show" 
+                                             ajax="false" 
+                                             action="#{streamingView.showMovie()}" 
+                                             styleClass="rentFavButton"  
+                                             style="background: white;color: forestgreen"
+                                             rendered="#{streamingView.checkPlay()}"/>
+
+
+                            <p:commandLink style="background: white;color: Green; font-size: 50px" 
+                                           rendered="#{not streamingView.favoriteSwitch}" 
+                                           action="#{streamingView.addFavorite()}" 
+                                           update="@form" >
+                                <span class="fa fa-fw fa-heart" ></span>
+                            </p:commandLink>
+
+                            <p:commandLink 
+                                styleClass="favButton" 
+                                style="background: white;color: red;font-size: 50px;"
+                                rendered="#{streamingView.favoriteSwitch}" 
+                                action="#{streamingView.removeFavorite()}" 
+                                update="@form" >
+                                <span class="fa fa-minus-circle" ></span>
+                            </p:commandLink>
+                        </p:panelGrid>
+                    </p:row>
+
+
+
+                    <p:row>
+                        <p:panelGrid columns="2" style="font-size: 2em; width: 100%">
+
+                            <h:outputText value="Movie Title: " />
+                            <h:outputText value="#{streamingView.selectedMovie.title}" />
+
+
+                            <h:outputText value="Actors: " />
+                            <h:outputText value="#{streamingView.selectedMovie.actors}" />
+
+
+                            <h:outputText value="Genre: " />
+                            <h:outputText value="#{streamingView.selectedMovie.genre.name}" />
+
+
+                            <h:outputText value="Rating: " />
+                            <h:outputText value="#{streamingView.selectedMovie.ratings.label}" />
+
+                            <h:outputText value="Description: " />
+                            <h:outputText value="#{streamingView.selectedMovie.description}" />
+                        </p:panelGrid>
+
+
+                    </p:row>
+
+
+                    <p:row>
+
+                    </p:row>
+
+
+
+                </p:column>
+
+            </p:panelGrid>
+
+
+            <p:growl id="alreadyOwned" showDetail="false"/> 
+        </h:form>
+    </ui:define>
+</ui:composition>

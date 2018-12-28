@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/inteliflixTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"  >
+
+
+
+    <ui:define name="content">
+
+        <h10 class="center-prominant" >Welcome to your Account Page</h10>
+        <h:form id="generalInfoForm" enctype="multipart/form-data">
+            <p:growl id="growl" showDetail="false" sticky="false" />  
+
+            <div class="center">
+                <h:panelGrid columns="1" cellpadding="10" style="width:100%; font-size: 1em; ">
+                    <h:panelGrid columns="2" cellpadding="10" style="width:100%; font-size: 2.2em; ">
+                        <h:panelGrid columns="2" cellpadding="5"  style="width:100%; background: #59c4f6">
+                            <f:facet name="header"  >
+                                <p:outputPanel>
+                                    <h:outputText value="Personal Information" />
+                                </p:outputPanel>
+                            </f:facet>
+
+                            <h:outputLabel value="Email" for="email" />
+                            <h:inputText id="email" 
+                                         value="#{accountView.selectedUser.email}"
+                                         styleClass="largeText"
+                                         title="Email" />
+
+                            <h:outputLabel value="New Password" for="passwordFirstEntry" />
+                            <p:password id="passwordFirstEntry" 
+                                        value="#{accountView.passwordFirstEntry}" 
+                                        styleClass="largeText"
+                                        title="passwordOne" />
+
+
+                            <h:outputLabel value="Re-Enter Password" for="passwordSecondEntry" />
+                            <p:password id="passwordSecondEntry" 
+                                        value="#{accountView.passwordSecondEntry}"
+                                        styleClass="largeText"
+                                        title="passwordTwo" />
+                        </h:panelGrid>
+
+
+                        <h:panelGrid columns="2" cellpadding="5" style="width:100%; background: #59c4f6">
+                            <f:facet name="header">
+                                <p:outputPanel>
+                                    <h:outputText value="Billing Information"/>
+                                </p:outputPanel>
+                            </f:facet>
+                            <h:outputLabel value="Name on Card" for="nameOnCard" />
+                            <h:inputText id="nameOnCard" 
+                                         value="#{accountView.selectedUser.name}" 
+                                         styleClass="largeText"
+                                         title="nameOnCard" />
+
+                            <h:outputLabel value="Address" for="address" />
+                            <h:inputText id="address" 
+                                         value="#{accountView.selectedUser.address}" 
+                                         styleClass="largeText"
+                                         title="address" />
+
+
+                            <h:outputLabel value="Credit Card Number" for="creditCardNumber" />
+                            <h:inputText id="creditCardNumber" 
+                                         value="#{accountView.selectedUser.creditCard}" 
+                                         styleClass="largeText"
+                                         title="creditCardNumber" />
+                        </h:panelGrid>
+                    </h:panelGrid>
+
+                    <h:panelGrid id="infoPanel" columns="2" cellpadding="15"  styleClass="panelGridCenter" >
+                        <p:commandButton value="Update Information" 
+                                         id="commandUpdateInfo"
+                                         styleClass="largeSplitButtonAccount"
+                                         actionListener="#{accountView.updateInfo()}" 
+                                         update="@form" />
+                        <p:commandButton value="Cancel Update" 
+                                         id="commandCancelUpdate"
+                                         styleClass="largeSplitButtonAccount"
+                                         actionListener="#{accountView.cancelUpdate()}" 
+                                         update="@form" />
+                    </h:panelGrid>
+
+                </h:panelGrid>
+
+                <!--Customer Billing Information-->
+                <h:panelGrid columns="2" cellpadding="5" style="background: #59c4f6">
+                    <p:dataTable id="theCustomers" 
+                                 widgetVar="customerTable" 
+                                 value="#{accountView.selectedUser.movieRented}"
+                                 var ="movieRented"
+                                 editable="true" 
+
+                                 style="width:100% ; font-size: 2em;">
+
+                        <!-- Header: Top Title -->
+                        <f:facet name="header">
+                            <p:outputPanel>
+                                <h:outputText value="All Rentals"/>
+                            </p:outputPanel>
+                        </f:facet>
+
+
+                        <p:column headerText="Movie Title">
+                            <h:outputText value="#{movieRented.movie.title}"/>
+                        </p:column>
+
+                        <p:column headerText="Cost of Rental" width='30%'>
+                            <h:outputText value="#{movieRented.rentedPrice}"/>
+                        </p:column>
+
+                        <p:column  headerText="Expiration Date" width='30%'>
+                            <h:outputText value="#{movieRented.expiredDate}"/>
+                        </p:column>
+
+
+                        <!-- Footer Bar (Stylistic Choice)-->
+                        <f:facet name="footer">
+                            <p:outputPanel>
+                            </p:outputPanel>
+                        </f:facet>
+                    </p:dataTable>
+
+
+                </h:panelGrid>
+
+                <p:panel styleClass="center"
+                         style="width:20% ; font-size: 2em; background: transparent; border: #59c4f6; text-align: center">
+                    <h:outputText value="Total Cost: " style="color: white"></h:outputText>
+                    <h:outputText value="#{accountView.totalCost}"
+                                  styleClass="largeButton" 
+                                  style="color: white">
+                        <f:convertNumber currencySymbol="$" type="currency" />
+                    </h:outputText>
+                </p:panel>
+
+
+
+
+            </div>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+

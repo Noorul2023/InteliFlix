@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/loginTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:define name="content">
+        <!-- Width of dialog is needed for the role selection panel view -->
+        <h:form>
+            <p:dialog id="dialog"
+                      header="Registration"
+                      visible="true"
+                      draggable="false"
+                      resizable="false"
+                      responsive="true"
+                      closable="false"
+                      modal="true"
+                      width="450"
+                      rendered="#{not registrationView.billSwitch}"
+                      >
+            
+                <p:panel style="border:none;background:none;">
+
+                    <p:panelGrid columns="2" layout="grid">
+                        <p:outputLabel value="Email: " styleClass="headerLabel"  />
+                        <p:inputText value="#{registrationView.email}" ps:placeholder="Enter Email" required="true" />
+
+                        <p:outputLabel value="Password: " styleClass="headerLabel"  />
+                        <p:password value="#{registrationView.password}" style="color:black;" ps:placeholder="Enter Password" required="true"  />
+                        
+                        <p:outputLabel value="Re-Enter Password: " styleClass="headerLabel"  />
+                        <p:password value="#{registrationView.rePassword}" style="color:black;" ps:placeholder="Re-Enter Password" required="true"  />
+
+                    </p:panelGrid>
+                    <h:panelGroup layout="block" >
+                        <p:commandButton value="Go to Billing" ajax="false" action="#{registrationView.switchBill()}"
+                                         update="@form"/>
+                    </h:panelGroup>
+                
+                    
+                </p:panel>
+            </p:dialog>
+            
+            <p:dialog
+                      header="Billing Information"
+                      visible="true"
+                      draggable="false"
+                      resizable="false"
+                      responsive="true"
+                      closable="false"
+                      modal="true"
+                      width="450"
+                      rendered="#{registrationView.billSwitch}"
+                      >
+                
+                <p:panel style="border:none;background:none;" >
+
+                    <p:panelGrid columns="2" layout="grid">
+                        <p:outputLabel value="Name: " styleClass="headerLabel"  />
+                        <p:inputText value="#{registrationView.name}" ps:placeholder="Enter Name" required="true" />
+
+                        <p:outputLabel value="Address: " styleClass="headerLabel"  />
+                        <p:inputText value="#{registrationView.address}" ps:placeholder="Enter Address" required="true"  />
+                        
+                        <p:outputLabel value="Credit Card Number: " styleClass="headerLabel"  />
+                        <p:inputText value="#{registrationView.creditCard}" ps:placeholder="Enter Credit Card Number" required="true"  />
+
+                    </p:panelGrid>
+                    <h:panelGroup layout="block" >
+                        <p:commandButton value="Create Account" ajax="false" action="#{registrationView.accountCreation()}"/>
+                    </h:panelGroup>
+                    
+                </p:panel>
+                
+            </p:dialog>
+            
+            <p:growl showDetail="true"/> 
+
+        </h:form>  
+        
+</ui:define>
+</ui:composition>

@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/inteliflixTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:p="http://primefaces.org/ui"  >
+
+
+
+    <ui:define name="content">
+
+        <h:form id="generalInfoForm" enctype="multipart/form-data">
+            <h10 class="center-prominant" >Welcome to the Home Page</h10>
+            <p:growl id="growl" showDetail="true" sticky="false" />  
+
+            <p:commandButton value="New Search" 
+                             icon="fa fa-search" 
+                             actionListener="#{searchView.showSearchFields}" 
+                             update="@form" 
+                             styleClass="newSearch" 
+                             rendered="#{searchView.viewSearchButton}"
+                             style="width:85%; height:40px; font-size: 1.75em;"/>
+
+            <p:panel  id="searches" 
+                      styleClass="center" 
+                      rendered="#{not searchView.viewSearchButton}" 
+                      style="background: skyblue; margin-bottom:20px; width:80%;">
+                <h:panelGrid columns="1" cellpadding="5" styleClass="center" style="width:100%;">
+                    <h:panelGrid columns="4" cellpadding="5" styleClass="center" style="width:100%; font-size: 1.75em;">
+                        <p:outputLabel value="Search by Title: "/>
+                        <p:autoComplete placeholder="Enter Title" value="#{searchView.titleSearch}" completeMethod="#{searchView.completeText}"/>
+
+                        <p:outputLabel value="Search by Actor: " />
+                        <p:inputText placeholder="Enter Actor" value="#{searchView.actorSearch}"/>   
+
+                        <p:outputLabel value="Select a Rating: " />
+                        <p:selectOneMenu value="#{searchView.ratingSearch}" style="width:68%">
+                            <f:selectItem itemLabel="Ratings" itemValue="#{null}" noSelectionOption="true" />
+                            <f:selectItem itemLabel="G" itemValue="G" />
+                            <f:selectItem itemLabel="PG" itemValue="PG" />
+                            <f:selectItem itemLabel="PG-13" itemValue="PG-13" /> 
+                            <f:selectItem itemLabel="R" itemValue="R" />
+                            <f:selectItem itemLabel="NR" itemValue="NR" /> 
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="Select a Genre: " />
+                        <p:selectOneMenu value="#{searchView.genre}" style="width:68%" converter="genreConverter">
+                            <f:selectItem itemLabel="Genres" itemValue="#{null}"  noSelectionOption="true"/>
+                            <f:selectItems value="#{searchView.genres}" />
+                        </p:selectOneMenu>
+                        <p:message for="@previous" />
+                    </h:panelGrid>
+                    <p:commandButton value="Search" icon="fa fa-search" actionListener="#{searchView.searchIF}" update="@form" style="width:97%; height:40px; font-size: 1.75em;"/>
+                </h:panelGrid>
+            </p:panel>
+                    <p:separator styleClass="emptySpace"/>
+
+
+
+
+            <p:carousel value="#{searchView.movieList}"
+                        rendered="#{searchView.viewResults}"
+                        headerText="Search Results"
+                        var="movie" 
+                        itemStyle="text-align:center" 
+                        styleClass="center"
+                        easing="easeInOutQuad"
+                        circular ="true"
+                        style="width:85%; font-size: 2em"
+                        responsive="true">
+                <h:commandLink action="#{searchView.gotoMovie(movie.serialKey)}">
+                    <p:graphicImage  value="#{moviePhotoLoader.image}"
+                                     height="250" width="190"  cache="false" >
+                        <f:param name="movieKey" value="#{movie.serialKey}" />
+                    </p:graphicImage>
+
+                    <h3>
+                        <p:outputLabel value="#{movie.title}"></p:outputLabel>
+                    </h3>
+                </h:commandLink>
+            </p:carousel>
+
+
+            <p:carousel value="#{searchView.featuredMoviesList}"
+                        rendered="#{searchView.viewFeatured}"
+                        easing="easeInOutQuad"
+                        var="movie" 
+                        itemStyle="text-align:center" 
+                        responsive="true"
+                        headerText="Featured Films"
+                        styleClass="center"
+                        circular ="true"
+                        style="width:85%; font-size: 2em; background: transparent"
+                        >
+                <h:commandLink action="#{searchView.gotoMovie(movie.serialKey)}" style="backface-visibility: hidden; background: transparent;">
+                    <p:graphicImage  value="#{moviePhotoLoader.image}"
+                                     height="250" 
+                                     width="190"
+                                     cache="false"
+                                     >
+                        <f:param name="movieKey" value="#{movie.serialKey}" />
+                    </p:graphicImage>
+
+                    <h3>
+                        <p:outputLabel value="#{movie.title}" ></p:outputLabel>
+                    </h3>
+                </h:commandLink>
+            </p:carousel>
+
+
+
+
+
+
+
+
+
+
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+
+
